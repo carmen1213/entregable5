@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.net.http.WebSocket;
 
 import static java.awt.Font.*;
 
@@ -15,7 +16,11 @@ public class primerpanel extends JFrame {
  private JButton copiar;
  private JLabel h1;
  private JSpinner spinner;
- private JCheckBox minuscula,mayuscula,numeros,simbolos;
+ private  JCheckBox  minuscula,mayuscula,numeros,simbolos;
+ private  boolean minusculas;
+    private  boolean mayusculas;
+    private boolean numeross;
+    private boolean simboloss;
  private SpinnerModel spin= new SpinnerNumberModel(1,1,20,1);
  private JProgressBar barra;
  private JButton generar;
@@ -79,15 +84,19 @@ public class primerpanel extends JFrame {
 
      minuscula=new JCheckBox("Minuscula");
      minuscula.setFont(g);
+     minuscula.addActionListener(new Listenerco());
      minuscula.setBackground(new Color(247, 218, 163));
      mayuscula=new JCheckBox("Mayuscula");
      mayuscula.setFont(g);
+     mayuscula.addActionListener(new Listenerma());
      mayuscula.setBackground(new Color(247, 218, 163));
      numeros = new JCheckBox("Numeros");
      numeros.setFont(g);
+     numeros.addActionListener(new Listenerno());
      numeros.setBackground(new Color(247, 218, 163));
      simbolos=new JCheckBox("Simbolos");
      simbolos.setFont(g);
+     simbolos.addActionListener(new Listenersi());
      simbolos.setBackground(new Color(247, 218, 163));
      lista.setLayout(new GridLayout(4,1));
      lista.add(minuscula);
@@ -210,5 +219,49 @@ public class primerpanel extends JFrame {
            }
            }
         }
+
+    private class Listenerco implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(minuscula.isSelected() == true){
+                minusculas = true;
+            }else {
+                minusculas= false;
+            }
+        }
     }
+
+    private class Listenerma implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(mayuscula.isSelected() == true){
+                mayusculas = true;
+            }else {
+                mayusculas= false;
+            }
+        }
+    }
+
+    private class Listenerno implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(numeros.isSelected() == true){
+                numeross = true;
+            }else {
+                numeross= false;
+            }
+        }
+    }
+
+    private class Listenersi implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(simbolos.isSelected() == true){
+                simboloss= true;
+            }else {
+                simboloss= false;
+            }
+        }
+    }
+}
 

@@ -1,10 +1,10 @@
 public class seguridad {
-    public static int CantidadContra;
-    public static String esFuerte() {
-        if (CantidadContra>8){
-            return "La contraseña es segura: ";
+    ;
+    public static boolean esFuerte(int contra) {
+        if (contra>8){
+            return true;
         }else{
-            return "La contraseña es debil: ";
+            return false;
         }
     }
 }

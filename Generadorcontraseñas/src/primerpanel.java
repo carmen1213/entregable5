@@ -174,7 +174,7 @@ public class primerpanel extends JFrame {
         return SANS_SERIF;
     }
 
-    public static void main(String[] args) {
+    public static void main() {
         primerpanel pp = new primerpanel();
     }
 

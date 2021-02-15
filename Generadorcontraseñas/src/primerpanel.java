@@ -26,7 +26,7 @@ public class primerpanel extends JFrame {
     private boolean numeross;
     private boolean simboloss;
     private SpinnerModel spin = new SpinnerNumberModel(1, 1, 20, 1);
-    private JProgressBar barra;
+    private JProgressBar barra  ;
     private JTextField textbarra;
     private JButton generar;
     private JButton cancelar;
@@ -78,6 +78,7 @@ public class primerpanel extends JFrame {
         JPanel spinn = new JPanel();
         spinn.setBackground(new Color(247, 218, 163));
         spinner = new JSpinner(spin);
+        int cantidad=(int) spinner.getValue();
         spinner.setPreferredSize(new Dimension(100, 30));
         spinn.add(spinner);
         segundo2.add(spinn);
@@ -117,8 +118,9 @@ public class primerpanel extends JFrame {
         tercero.setLayout(new GridLayout(3, 1));
         JPanel barrap = new JPanel();
         barrap.setBackground(new Color(247, 218, 163));
-        barra = new JProgressBar();
-        barra.getValue();
+        barra = new JProgressBar(JProgressBar.HORIZONTAL,1,20);
+        barra.setStringPainted(true);
+        //barra = ((barra.getValue() * 100 / barra.getValue()) + "%");
         barrap.add(barra);
         barra.addChangeListener(new hola());
         JPanel vacio =new JPanel();
@@ -180,6 +182,7 @@ public class primerpanel extends JFrame {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(stringSelection, null);
 
+
         }
     }
 
@@ -197,13 +200,17 @@ public class primerpanel extends JFrame {
         public void actionPerformed(ActionEvent e) {
             int cantidad = (int) spin.getValue();
             if (seguridad.esFuerte(cantidad) == true) {
-                barra.setBackground(Color.green);
-                barra.add(new JLabel("contraseña buena"), BorderLayout.CENTER);
+                barra.setForeground(Color.green);
+                //barra.add(new JLabel("contraseña buena"), BorderLayout.CENTER);
                 barra.setBorder(new TitledBorder("Segura"));
-                barra.setValue(0);
+                barra.setBackground(new Color(247, 218, 163));
+                barra.setValue((int)spin.getValue());
+
             } else {
-                barra.setBackground(Color.red);
+                barra.setForeground(Color.red);
                 barra.setBorder(new TitledBorder(" Insegura"));
+                barra.setBackground(new Color(247, 218, 163));
+                barra.setValue((int)spin.getValue());
             }
             String contra = "";
             String mayuscula = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
@@ -246,13 +253,23 @@ public class primerpanel extends JFrame {
     private class hola implements ChangeListener {
         @Override
         public void stateChanged(ChangeEvent e) {
-            int cantidad= (int)spin.getValue();
-           if (seguridad.esFuerte(cantidad)==true) {
-               barra.setBackground(Color.green);
-           }else {
-               barra.setBackground(Color.red);
-           }
-           }
+            int cantidad = (int) spin.getValue();
+            if (seguridad.esFuerte(cantidad) == true) {
+                barra.setForeground(Color.green);
+                //barra.add(new JLabel("contraseña buena"), BorderLayout.CENTER);
+                barra.setBorder(new TitledBorder("Segura"));
+                barra.setBackground(new Color(247, 218, 163));
+                barra.setValue((int) spin.getValue());
+
+
+
+            } else {
+                barra.setForeground(Color.red);
+                barra.setBorder(new TitledBorder(" Insegura"));
+                barra.setBackground(new Color(247, 218, 163));
+                barra.setValue((int) spin.getValue());
+            }
+        }
         }
 
     private class Listenerco implements ActionListener {

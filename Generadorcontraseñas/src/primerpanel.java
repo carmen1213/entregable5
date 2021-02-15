@@ -8,6 +8,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.http.WebSocket;
 import java.util.Random;
@@ -17,6 +18,7 @@ import static java.awt.Font.*;
 public class primerpanel extends JFrame {
 
     private JTextField textcontra;
+    private String contraseña;
     private JButton copiar;
     private JLabel h1;
     private JSpinner spinner;
@@ -49,10 +51,11 @@ public class primerpanel extends JFrame {
         texto.setLayout(new FlowLayout());
         textcontra = new JTextField("");
         textcontra.setBackground(new Color(252, 240, 131));
+        Icon foto  = new ImageIcon("C:\\Users\\Carmen\\Downloads\\copiar.png");
         copiar = new JButton("Copiar");
         copiar.setBackground(new Color(122, 222, 255));
-        copiar.setBounds(new Rectangle(20, 20, 50, 20));
-        copiar.setSize(30, 30);
+        copiar.setBounds(new Rectangle(20, 40, 50, 70));
+        copiar.setSize(50, 50);
         copiar.setFont(h);
         texto.add(copiar);
         h1 = new JLabel("Personalice la contraseña requerida");
@@ -178,9 +181,27 @@ public class primerpanel extends JFrame {
     private class Listenercopiar1 implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            StringSelection stringSelection = new StringSelection(textcontra.getText());
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            clipboard.setContents(stringSelection, null);
+
+            if (contraseña == null){
+                JOptionPane.showMessageDialog(null, "No hay ninguna contraseña generada");
+            }else{
+                JOptionPane.showMessageDialog(null,"Acabas de Copiar la contraseña en un documento y  en portapapeles.");
+                StringSelection stringSelection = new StringSelection(textcontra.getText());
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                clipboard.setContents(stringSelection, null);
+
+                FileWriter fichero = null;
+                try {
+                    fichero = new FileWriter("C:\\Users\\Carmen\\IntelliJProjects\\entregable5\\Generadorcontraseñas\\src\\contraseñas.txt", true);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                try (PrintWriter pw = new PrintWriter(fichero)) {
+                    pw.println(contraseña);
+                }
+
+            }
+
 
 
         }
@@ -231,7 +252,7 @@ public class primerpanel extends JFrame {
                 contra += simbolos;
             }
 
-            String contraseña = "";
+            contraseña="";
             int cantidadcontra = (int) spin.getValue();
             Random aleatoria = new Random();
             for(int i = 0;i<cantidadcontra;i++)

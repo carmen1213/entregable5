@@ -1,7 +1,10 @@
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
@@ -24,6 +27,7 @@ public class primerpanel extends JFrame {
     private boolean simboloss;
     private SpinnerModel spin = new SpinnerNumberModel(1, 1, 20, 1);
     private JProgressBar barra;
+    private JTextField textbarra;
     private JButton generar;
     private JButton cancelar;
     Font f = new Font("Monospaced", BOLD, 17);
@@ -31,7 +35,7 @@ public class primerpanel extends JFrame {
     Font h = new Font("Times New Roman", BOLD, 14);
 
     public primerpanel() {
-        super("Esto es el generador de contraseñas");
+        super("Generador de contraseñas");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
 
@@ -111,13 +115,14 @@ public class primerpanel extends JFrame {
         JPanel tercero = new JPanel();
         tercero.setBackground(new Color(247, 218, 163));
         tercero.setLayout(new GridLayout(3, 1));
-
         JPanel barrap = new JPanel();
         barrap.setBackground(new Color(247, 218, 163));
         barra = new JProgressBar();
         barra.getValue();
         barrap.add(barra);
         barra.addChangeListener(new hola());
+        JPanel vacio =new JPanel();
+        vacio.setBackground(new Color(247, 218, 163));
         JPanel botones = new JPanel();
         botones.setBackground(new Color(247, 218, 163));
         botones.setLayout(new GridLayout(1, 2, 30, 30));
@@ -143,6 +148,7 @@ public class primerpanel extends JFrame {
         generarb.add(generar);
         botones.add(generarb);
         tercero.add(barrap);
+        tercero.add(vacio);
         tercero.add(botones);
         cancelar.addActionListener(new Listenercopiar2());
         generar.addActionListener(new Listenercopiar3());
@@ -170,17 +176,9 @@ public class primerpanel extends JFrame {
     private class Listenercopiar1 implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            /*try {
-                FileWriter documento = new FileWriter  ("C:\\Users\\carma\\IdeaProjects\\entregable5\\Generadorcontraseñas\\src\\contraseñas", true);
-                PrintWriter pw = new PrintWriter (documento);
-                pw.println(contraseña[resultado]);
-                pw.close();
-            } catch (Exception e) {
-                // TODO: handle exception
-            }
-
-
-        }*/
+            StringSelection stringSelection = new StringSelection(textcontra.getText());
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(stringSelection, null);
 
         }
     }
@@ -200,10 +198,12 @@ public class primerpanel extends JFrame {
             int cantidad = (int) spin.getValue();
             if (seguridad.esFuerte(cantidad) == true) {
                 barra.setBackground(Color.green);
-                barra.setString("contraseña buena");
                 barra.add(new JLabel("contraseña buena"), BorderLayout.CENTER);
+                barra.setBorder(new TitledBorder("Segura"));
+                barra.setValue(0);
             } else {
                 barra.setBackground(Color.red);
+                barra.setBorder(new TitledBorder(" Insegura"));
             }
             String contra = "";
             String mayuscula = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
